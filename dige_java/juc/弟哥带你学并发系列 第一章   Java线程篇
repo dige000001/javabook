@@ -1,0 +1,151 @@
+## 公众号：“弟哥带你进大厂”，让你知识成体系的公众号，一定要关注，我们一起进大厂
+
+# 创建和运行线程
+
+## 直接使用 Thread
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2c8aedc12f994f9ab9897c08d2945631~tplv-k3u1fbpfcp-zoom-1.image)
+
+如
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e34df24c03854a33a6a7a88ee9e31835~tplv-k3u1fbpfcp-zoom-1.image)
+
+## 使用 Runnable 配合 Thread
+
+把【线程】和【任务】（要执行的代码）分开
+
+-   Thread 代表线程
+-   Runnable 可运行的任务（线程要执行的代码）
+
+好处：
+
+-   方法1 是把线程和任务合并在了一起，方法2 是把线程和任务分开了
+-   用 Runnable 更容易与线程池等高级 API 配合
+
+<!---->
+
+-   用 Runnable 让任务类脱离了 Thread 继承体系，更灵活
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/80c170ef9721427c90c6083568d2e238~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/78430fd127a947c0861575ca675c0af8~tplv-k3u1fbpfcp-zoom-1.image)
+
+Java 8 以后可以使用 lambda 精简代码
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2cc4d6db11314e64a92bf6b50d85bfc1~tplv-k3u1fbpfcp-zoom-1.image)
+
+## FutureTask 配合 Thread
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6840d51d82841d094103a475c857b5b~tplv-k3u1fbpfcp-zoom-1.image)
+
+## 使用线程池
+
+后面再写
+
+# 线程内部函数
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/815df4fafc33446e9039953c362f1ebe~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/11d1d38f27e14c29a6149c7fcb62ce6b~tplv-k3u1fbpfcp-zoom-1.image)![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/98cf0c11c45f467fabb1915d282ed950~tplv-k3u1fbpfcp-zoom-1.image)
+
+## start 与 run
+
+在main方法里调用thread.run()，程序会在main线程里执行
+
+而在main里调用thread.start()，则会新开一个线程，在那个线程里运行thread.run()
+
+## sleep 与 yield
+
+### sleep
+
+1. 调用 sleep 会让当前线程从 Running 进入 Timed Waiting 状态（阻塞）
+
+2. 其它线程可以使用 interrupt 方法打断正在睡眠的线程，这时 sleep 方法会抛出 InterruptedException
+
+3. 睡眠结束后的线程未必会立刻得到执行
+
+4. 建议用 TimeUnit 的 sleep 代替 Thread 的 sleep 来获得更好的可读性
+
+### yield
+
+1. 调用 yield 会让当前线程从 Running 进入 Runnable 就绪状态，然后调度执行其它线程
+
+2. 具体的实现依赖于操作系统的任务调度器
+
+# 线程优先级
+
+-   线程优先级会提示（hint）调度器优先调度该线程，但它仅仅是一个提示，调度器可以忽略它
+-   如果 cpu 比较忙，那么优先级高的线程会获得更多的时间片，但 cpu 闲时，优先级几乎没作用
+
+
+
+# interrupt 方法详解
+
+## 打断 sleep，wait，join 的线程
+
+打断 sleep 的线程, 会清空打断状态，以 sleep 为例
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2e0ce3b416334c8b9814354d01d8e385~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fbe9ea0e3bd64694b3131d9779ddf445~tplv-k3u1fbpfcp-zoom-1.image)
+
+## 打断正常运行的线程
+
+打断正常运行的线程，并不会强行停止线程，不会清空打断状态
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/57b0ad91b12d42b5b326d4f641ea44d7~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e92d314adce54a69b470769d14fefaa0~tplv-k3u1fbpfcp-zoom-1.image)
+
+## 打断 park 线程
+
+打断 park 线程, 不会清空打断状态
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/83c0ea0b844841baa4edd1a8c57e362e~tplv-k3u1fbpfcp-zoom-1.image)![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/104ae7e020ac461289cf599119a4e89c~tplv-k3u1fbpfcp-zoom-1.image)
+
+
+
+
+**如果打断标记已经是 true, 则 park 会失效**
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b1333b4dc33643028130738b600aed48~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fa04dc0efaab4839984f84f9be03e43a~tplv-k3u1fbpfcp-zoom-1.image)
+
+**这说明：** `park`**仅在打断标记为false的状态下才会阻塞线程**
+
+****
+
+****
+
+# JAVA线程状态
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/72ce48789d974841a6792f783dae227d~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e9046710aa4484e9788131363606389~tplv-k3u1fbpfcp-zoom-1.image)
+
+-   `NEW` 线程刚被创建，但是还没有调用 `start()` 方法
+-   `RUNNABLE` 当调用了 `start()` 方法之后，注意，Java API 层面的 `RUNNABLE` 状态涵盖了 操作系统 层面的【可运行状态】、【运行状态】和【阻塞状态】（由于 BIO 导致的线程阻塞，在 Java 里无法区分，仍然认为是可运行）
+
+<!---->
+
+-   `BLOCKED` ，`WAITING` ， `TIMED_WAITING` 都是 Java API 层面对【阻塞状态】的细分，后面会在状态转换一节详述
+-   `TERMINATED` 当线程代码运行结束
+
+# 主线程与守护线程
+
+默认情况下，Java 进程需要等待所有线程都运行结束，才会结束。有一种特殊的线程叫做守护线程，只要其它非守护线程运行结束了，即使守护线程的代码没有执行完，也会强制结束。
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f739cb3bbfa74a719293f3cf8e0d7192~tplv-k3u1fbpfcp-zoom-1.image)
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c0ef1362f8a04247beb5cb50a2c0bc95~tplv-k3u1fbpfcp-zoom-1.image)
+
+可以看到，守护线程并没有完全运行结束，所以在构建Daemon线程时，不能依靠finally块中的内容来确保执行关闭或清理资源的逻辑。
+
+**注：**
+
+-   垃圾回收器线程就是一种守护线程
+-   Tomcat 中的 Acceptor 和 Poller 线程都是守护线程，所以 Tomcat 接收到 shutdown 命令后，不会等待它们处理完当前请求
+
+
+
