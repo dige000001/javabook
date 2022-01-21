@@ -189,7 +189,7 @@
     [10.9 第九章 流程控制](https://github.com/dige000001/javabook/blob/main/dige_java/mysql_use/弟哥带你学Mysql系列%20-%20第九章%20流程控制.md)
     
     [10.10 第十章 存储过程和函数](https://github.com/dige000001/javabook/blob/main/dige_java/mysql_use/弟哥带你学Mysql系列%20-%20第十章%20存储过程和函数.md)  
-9.  [弟哥带你学Redis使用系列 ](https://github.com/dige000001/javabook/tree/main/dige_java/spring_core)
+9.  [弟哥带你学Redis使用系列 ](https://github.com/dige000001/javabook/tree/main/dige_java/redis)
 
     [11.1 第一章 Redis基本数据类型篇](https://github.com/dige000001/javabook/blob/main/dige_java/redis/弟哥带你学Redis系列%20-%20第一章%20Redis基本数据类型篇.md)
     
